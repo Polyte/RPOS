@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="theme-color" content="#1e40af" />
+    <meta name="description" content="Roxton POS Pro - Comprehensive Point of Sale interface system with multiple user roles" />
+    <meta name="keywords" content="pos, point of sale, retail, cashier, inventory, sales management" />
+    <meta name="author" content="Roxton POS Pro Team" />
+    
+    <!-- Apple Touch Icon -->
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Roxton POS" />
+    
+    <!-- Microsoft Tiles -->
+    <meta name="msapplication-TileColor" content="#1e40af" />
+    <meta name="msapplication-config" content="/browserconfig.xml" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://roxton-pos-pro.vercel.app/" />
+    <meta property="og:title" content="Roxton POS Pro" />
+    <meta property="og:description" content="Comprehensive Point of Sale interface system with multiple user roles" />
+    <meta property="og:image" content="/og-image.png" />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://roxton-pos-pro.vercel.app/" />
+    <meta property="twitter:title" content="Roxton POS Pro" />
+    <meta property="twitter:description" content="Comprehensive Point of Sale interface system with multiple user roles" />
+    <meta property="twitter:image" content="/og-image.png" />
+    
+    <!-- Preconnect to Google Fonts for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    
+    <!-- Critical font loading -->
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700&display=swap" rel="stylesheet" />
+    
+    <!-- iOS viewport height fix -->
+    <script>
+      // Set CSS custom property for mobile viewport height
+      function setVH() {
+        let vh = window.innerHeight * 0.01;
+        document.documentElement.style.setProperty('--vh', `${vh}px`);
+      }
+      
+      setVH();
+      window.addEventListener('resize', setVH);
+      window.addEventListener('orientationchange', function() {
+        setTimeout(setVH, 100);
+      });
+    </script>
+    
+    <!-- Prevent FOUC (Flash of Unstyled Content) -->
+    <style>
+      #root {
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+      }
+      .app-loaded #root {
+        opacity: 1;
+      }
+      
+      /* Critical loading styles */
+      .loading-critical {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        font-family: 'Josefin Sans', sans-serif;
+      }
+      
+      .loading-critical.dark {
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        color: white;
+      }
+      
+      .loading-spinner {
+        width: 40px;
+        height: 40px;
+        border: 3px solid rgba(59, 130, 246, 0.3);
+        border-top: 3px solid #3b82f6;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+      
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+      
+      @media (prefers-color-scheme: dark) {
+        .loading-critical {
+          background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+          color: white;
+        }
+      }
+    </style>
+    
+    <title>Roxton POS Pro - Point of Sale System</title>
+  </head>
+  <body class="theme-transition">
+    <!-- Critical loading indicator -->
+    <div id="critical-loading" class="loading-critical">
+      <div class="text-center">
+        <div class="loading-spinner mx-auto mb-4"></div>
+        <div class="text-lg font-medium">Loading Roxton POS Pro...</div>
+        <div class="text-sm opacity-75 mt-2">Initializing system components</div>
+      </div>
+    </div>
+    
+    <!-- App root -->
+    <div id="root"></div>
+    
+    <!-- App initialization script -->
+    <script>
+      // Mark app as loaded once React takes over
+      window.addEventListener('DOMContentLoaded', function() {
+        setTimeout(function() {
+          document.body.classList.add('app-loaded');
+          const criticalLoading = document.getElementById('critical-loading');
+          if (criticalLoading) {
+            criticalLoading.style.opacity = '0';
+            setTimeout(function() {
+              criticalLoading.remove();
+            }, 300);
+          }
+        }, 100);
+      });
+      
+      // Service worker registration
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+          navigator.serviceWorker.register('/sw.js')
+            .then(function(registration) {
+              console.log('SW registered: ', registration);
+            })
+            .catch(function(registrationError) {
+              console.log('SW registration failed: ', registrationError);
+            });
+        });
+      }
+      
+      // Handle install prompt
+      let deferredPrompt;
+      window.addEventListener('beforeinstallprompt', function(e) {
+        e.preventDefault();
+        deferredPrompt = e;
+        // Show install button/banner if needed
+      });
+      
+      // Error boundary for critical errors
+      window.addEventListener('error', function(e) {
+        console.error('Critical error:', e);
+        if (e.message && e.message.includes('Loading chunk')) {
+          window.location.reload();
+        }
+      });
+      
+      // Unhandled promise rejections
+      window.addEventListener('unhandledrejection', function(e) {
+        console.error('Unhandled promise rejection:', e);
+      });
+    </script>
+    
+    <!-- React app script -->
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

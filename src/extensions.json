@@ -1,0 +1,60 @@
+{
+  "recommendations": [
+    // Essential React & TypeScript
+    "bradlc.vscode-tailwindcss",
+    "esbenp.prettier-vscode",
+    "dbaeumer.vscode-eslint",
+    "ms-vscode.vscode-typescript-next",
+    
+    // React specific
+    "dsznajder.es7-react-js-snippets",
+    "burkeholland.simple-react-snippets",
+    "formulahendry.auto-rename-tag",
+    
+    // Tailwind CSS
+    "bradlc.vscode-tailwindcss",
+    "heybourn.headwind",
+    
+    // Git & Version Control
+    "eamodio.gitlens",
+    "github.vscode-pull-request-github",
+    
+    // Code Quality & Formatting
+    "streetsidesoftware.code-spell-checker",
+    "ms-vscode.vscode-json",
+    "redhat.vscode-yaml",
+    
+    // Productivity
+    "christian-kohler.path-intellisense",
+    "christian-kohler.npm-intellisense",
+    "ms-vscode.vscode-npm-script",
+    
+    // Supabase
+    "supabase.supabase-vscode",
+    
+    // Development Tools
+    "ms-vscode.vscode-js-profile-flame",
+    "ms-vscode-remote.remote-containers",
+    "ms-vscode.vscode-json5",
+    
+    // Markdown
+    "yzhang.markdown-all-in-one",
+    "davidanson.vscode-markdownlint",
+    
+    // Themes (optional)
+    "github.github-vscode-theme",
+    "dracula-theme.theme-dracula",
+    
+    // Icons
+    "vscode-icons-team.vscode-icons",
+    
+    // Additional helpful extensions
+    "gruntfuggly.todo-tree",
+    "alefragnani.bookmarks",
+    "ms-vscode.vscode-typescript-next"
+  ],
+  "unwantedRecommendations": [
+    "hookyqr.beautify",
+    "ms-vscode.vscode-typescript-tslint-plugin"
+  ]
+}
